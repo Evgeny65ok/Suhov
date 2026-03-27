@@ -6,7 +6,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-using namespace std; // Добавлено, чтобы работал endl и cerr без std::
+using namespace std; 
 
 const int SERVER_PORT = 8080;
 const int BUFFER_SIZE = 1024;
