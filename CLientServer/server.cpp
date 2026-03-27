@@ -6,6 +6,8 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
+using namespace std; // Добавлено, чтобы работал endl и cerr без std::
+
 const int SERVER_PORT = 8080;
 const int BUFFER_SIZE = 1024;
 
@@ -16,20 +18,26 @@ int main() {
     serverAddr.sin_family = AF_INET;
     serverAddr.sin_addr.s_addr = INADDR_ANY;
     serverAddr.sin_port = htons(SERVER_PORT);
+
     if(bind(server_socket, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) < 0) {
-        std::cerr << "Ошибка bind";
+        cerr << "Ошибка bind";
         close(server_socket);
         return 2;
     }
+
     if(listen(server_socket, 3) < 0) {
-        std::cerr << "Ошибка listen"; close(server_socket);
+        cerr << "Ошибка listen"; 
+        close(server_socket);
         return 3;
     }
-    std::cout << "Слушаю порт " << SERVER_PORT << std::endl;
-    std::cout << "Ожидание клиента...";
+
+    cout << "Слушаю порт " << SERVER_PORT << endl;
+    cout << "Ожидание клиента...";
+
     sockaddr_in clientAddr;
     socklen_t clientAddrSize = sizeof(clientAddr);
     int clientSocket = accept(server_socket, (struct sockaddr*)&clientAddr, &clientAddrSize);
+
     if(clientSocket < 0) {
         close(server_socket);
         return 4;
@@ -38,9 +46,29 @@ int main() {
     while(true) {
         memset(buffer, 0, BUFFER_SIZE);
         int bytesReceived = recv(clientSocket, buffer, BUFFER_SIZE, 0);
+        
         if(bytesReceived <= 0)
-
-         break;
-    }
+            break;
     
+        string message(buffer);
+        if(message == "exit") {
+            cout << "Выход";
+            break;
+        }
+        string responce = ""; 
+        if(message == "ping") {
+            responce = "pong"; 
+        }
+        else {
+            responce = "Неизвестно";
+        }
+        cout << "Отпуск??" << endl;
+        send(clientSocket,
+             responce.c_str(), 
+             responce.length(), 
+             0); 
+    }
+    close(clientSocket);
+    close(server_socket); 
+    return 0;
 }
