@@ -76,14 +76,15 @@ class Graph
 };
 
 int main(){
-    std::queue<int> q;
+    Graph g1(5, true);
+    g1.addEdge(0,1);
+    g1.addEdge(1,2);
+    g1.addEdge(1,3);
+    g1.addEdge(0,4);
+    g1.addEdge(4,5);
 
-    q.push(10); 
-    q.push(20); 
-    q.push(30); 
-    string label = "ssdfs";
-    printQueue (q, label);
+    g1.BFS(0);
     return 0;
-
-    
 }
+
+
