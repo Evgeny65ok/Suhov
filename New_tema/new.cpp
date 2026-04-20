@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <string>
 
 using namespace std;
 
@@ -30,11 +31,12 @@ class Graph
         visited.resize (V, false);
         verbose = verboseMode;
     }
-    // тут начало для меня
-     void addEdge(int u, int v){
+    
+    void addEdge(int u, int v){
         adj[u].push_back(v);
         adj[v].push_back(u);
     }
+
     void BFS(int startVertex){
         fill (visited.begin(), visited.end(), false);
 
@@ -45,11 +47,9 @@ class Graph
         if(verbose){
             printQueue(q, "Очередь после добавления вершины");
             cout << "Посещаем вершину:" << startVertex << endl;
+        }
 
-            //тут две перемнные для меня
         int step = 1;
-        int level = 0;
-        //тут остановился
 
         while(!q.empty()){
             int currentVertex = q.front();
@@ -57,36 +57,33 @@ class Graph
 
             if(verbose){  
                 cout << "Шаг " << step << ": Посещаем вершину" << currentVertex << endl;
-               }
+            }
 
-               cout << currentVertex << "";
-
+            cout << currentVertex << " ";
 
             for(int neighbor : adj[currentVertex]){
                 if(!visited[neighbor]){
                     visited[neighbor] = true;
                     q.push(neighbor);
                     if(verbose){
-                        cout << "жобавляем  " << neighbor << endl;
+                        cout << "добавляем  " << neighbor << endl;
                     }
                 }
             }
-            
+            step++;
+        }
     }
-    };
-    
-   
+};
 
 int main(){
     std::queue<int> q;
 
-    q.push(10); // Queue: [10]
-    q.push(20); // Queue: [10, 20]
-    q.push(30); // Queue: [10, 20, 30]
+    q.push(10); 
+    q.push(20); 
+    q.push(30); 
     string label = "ssdfs";
     printQueue (q, label);
-    
     return 0;
 
+    
 }
-
