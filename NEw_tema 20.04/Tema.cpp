@@ -41,7 +41,7 @@ public:
 
     void DFS(int startVertex) {
         fill(visited.begin(), visited.end(), false);
-        stack <int> s;
+        std::stack<int> s;
         visited[startVertex] = true;
         s.push(startVertex);
 
@@ -72,27 +72,41 @@ public:
                 int neighbor = adj[currentVertex][i];
                 if (!visited[neighbor]) {
                     visited[neighbor] = true;
-                    step.push(neighbor);
-                    if (verbose) {:}
+                    s.push(neighbor);
+                    if (verbose) {;}
                 }
             }
            
             
         }
-        void DFSRecursive(int vertex) {
-            visited[vertex] = true;
-            cout << vertex << " ";
-            for(int neighbor : adjVertex){
-                if(!visited[neighbor]){
-                    DFSRecursive(neighbor);
-                }
+    }
+    void DFSRecursive(int vertex) {
+        visited[vertex] = true;
+        cout << vertex << " ";
+        for(int neighbor : adj[vertex]){
+            if(!visited[neighbor]){
+            DFSRecursive(neighbor);
             }
         }
-        void DFSRecursiveWrapper(int startVertex) {
-            fill visited(begin, end, false);
-            cout << "DFS рекурсивный" << endl;
-            DFSRecursive(startVertex);
-            cout << endl;
-        }
+    } // DFSRECURSIVE
+
+    void DFSRecursiveWrapper(int startVertex) {
+        fill(visited.begin(), visited.end(), false);
+        cout << "DFS рекурсивный" << endl;
+        DFSRecursive(startVertex);
+        cout << endl;
     }
 };
+
+
+int  main(){
+Graph g1(5, true);
+    g1.addEdge(0,1);
+    g1.addEdge(1,2);
+    g1.addEdge(1,3);
+    g1.addEdge(0,4);
+    g1.addEdge(4,5);
+    
+    g1.DFS(0);
+    return 0;
+}
