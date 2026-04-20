@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <stack>
+#include <algorithm>
 
 using namespace std;
 
@@ -47,15 +48,34 @@ public:
         if (verbose) {
             printStack(s, "Начало ");
         }
-        int step = 1;
+        
         while (!s.empty()) {
-            if (verbose) {
-                step++;
-            }
             int currentVertex = s.top();
             s.pop();
 
             cout << currentVertex << " ";
+
+            if (verbose) {
+                cout << "Ищем соседей currentVertex: " << currentVertex << " : ";
+                for (int neighbor : adj[currentVertex]) {
+                    cout << neighbor;
+                    if (visited[neighbor]) {
+                        cout << " посещён ";
+                    } else {
+                        cout << " Новая ";
+                    }
+                }
+                cout << endl;
+            }
+
+            for (int i = adj[currentVertex].size() - 1; i >= 0; i--) {
+                int neighbor = adj[currentVertex][i];
+                if (!visited[neighbor]) {
+                    visited[neighbor] = true;
+                    s.push(neighbor);
+                    if (verbose) {:}
+                }
+            }
         }
     }
 };
