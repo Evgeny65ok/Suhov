@@ -72,10 +72,27 @@ public:
                 int neighbor = adj[currentVertex][i];
                 if (!visited[neighbor]) {
                     visited[neighbor] = true;
-                    s.push(neighbor);
+                    step.push(neighbor);
                     if (verbose) {:}
                 }
             }
+           
+            
+        }
+        void DFSRecursive(int vertex) {
+            visited[vertex] = true;
+            cout << vertex << " ";
+            for(int neighbor : adjVertex){
+                if(!visited[neighbor]){
+                    DFSRecursive(neighbor);
+                }
+            }
+        }
+        void DFSRecursiveWrapper(int startVertex) {
+            fill visited(begin, end, false);
+            cout << "DFS рекурсивный" << endl;
+            DFSRecursive(startVertex);
+            cout << endl;
         }
     }
 };
